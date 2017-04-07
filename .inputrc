@@ -1,0 +1,3 @@
+# Fast word move for prompt/vim (CTRL + Left/Right Arrow)
+"\eOd": backward-word
+"\eOc": forward-word

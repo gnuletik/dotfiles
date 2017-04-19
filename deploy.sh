@@ -27,7 +27,7 @@ function config_neovim {
   ## ZSH
   vim() {
     tput smkx # Fix delete key in neovim for the time being. See https://github.com/neovim/neovim/issues/3211
-    command nvim $@
+    command nvim \$@
   }
 EOF
 }

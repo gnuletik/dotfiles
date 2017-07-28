@@ -14,6 +14,7 @@ Plug 'wting/rust.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'fatih/vim-go'
 Plug 'alvan/vim-closetag'		  " Automatically close HTML/XML tags
+Plug 'kchmck/vim-coffee-script'
 " Plug 'LeBarbu/vim-epitech'	          " Headers && indentation stuff
 " Plug 'klen/python-mode'
 
@@ -74,6 +75,17 @@ let g:syntastic_c_checkers=['make DEBUG=yes', 'gcc'] " set syntastic default che
 
 " ---------- ctrp configuration ----------
 let g:ctrlp_custom_ignore = '\v\.o$' " Do not list .o files
+
+" ---------- vim-go configuration ----------
+let g:go_metalinter_autosave = 1 " call metalinter on save
+
+let g:go_metalinter_autosave_enabled = ['vet', 'golint' ]
+" errcheck and unused are too slow to be called on save
+"let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck', 'unused' ]
+"let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck', 'unused', 'goimports', 'gotype', 'deadcode', 'varcheck', 'structcheck', 'ineffassign', 'unconvert', 'goconst', 'gosimple', 'staticcheck', 'misspell']
+
+" goimports is basically gofmt + auto-replace the imports
+let g:go_fmt_command = "goimports"
 
 " ---------- nerdtree configuration ----------
 
@@ -140,15 +152,13 @@ set autoindent smartindent cindent     " turn on auto/smart indenting
 " set expandtab                 " use spaces, not tabs
 set smarttab                    " make <tab> and <backspace> smarter
 set shiftwidth=2                " indents of 2
-set tabstop=8
-set softtabstop=8
+set tabstop=2
+set softtabstop=2
 "set backspace=eol,start,indent  " allow backspacing over indent, eol, & start
 set undolevels=1000             " number of forgivable mistakes
 set updatecount=100             " write swap file to disk every 100 chars
 set complete=.,w,b,u,U,t,i,d    " do lots of scanning on tab completion
 set viminfo=%100,'100,/100,h,\"500,:100,n~/.viminfo
-"set cino =>4^-2e2{2n-2
-"set cino=c0,C1
 set formatoptions+=r
 set comments=sl:/*,mb:**,elx:*/   " Comments for Epitech Norme
 "set textwidth=80
@@ -157,6 +167,8 @@ set nofoldenable
 
 "" C Indent parameter of multi-line declaration of function !
 set cino=(0
+"set cino =>4^-2e2{2n-2
+"set cino=c0,C1
 
 "" Indent like emacs !
 "set cinoptions={1s,>2s,e-1s,^-1s,n-1s,:1s,p5,i4,(0,u0,W1s shiftwidth=2
@@ -171,7 +183,7 @@ nmap <LocalLeader>nh :nohlsearch<cr>
 
 set diffopt=filler,iwhite       " ignore all whitespace and sync
 
-" find merge conflict markers
+" find git's merge conflict markers
 :map <LocalLeader>fc /\v^[<=>]{7}( .*\|$)<CR>
 
 " neovim requirements
@@ -180,3 +192,9 @@ let g:python_host_prog = '/usr/bin/python'
 " ---------- ASM-specific ----------
 au BufRead,BufNewFile *.asm set filetype=nasm " Overide filetype nasm for .asm files
 let g:syntastic_nasm_nasm_post_args = "-f elf64"
+
+" ---------- Javascript Specific ----------  
+autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2 et
+
+" ---------- Go Specific ----------  
+autocmd FileType go setlocal shiftwidth=8 tabstop=8 softtabstop=8 et

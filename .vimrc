@@ -11,10 +11,16 @@ call plug#begin('~/.vim/plugged')
 
 " ---------- Languages ---------- 
 Plug 'wting/rust.vim'
-Plug 'leafgarland/typescript-vim'
 Plug 'fatih/vim-go'
 Plug 'alvan/vim-closetag'		  " Automatically close HTML/XML tags
 Plug 'kchmck/vim-coffee-script'
+Plug 'mustache/vim-mustache-handlebars'
+Plug 'leafgarland/typescript-vim'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'w0rp/ale'
+Plug 'skywind3000/asyncrun.vim'
+"Plug 'StanAngeloff/php.vim'
 " Plug 'LeBarbu/vim-epitech'	          " Headers && indentation stuff
 " Plug 'klen/python-mode'
 
@@ -27,14 +33,14 @@ Plug 'ayu-theme/ayu-vim'
 
 " ----------- Others --------- 
 Plug 'mhinz/vim-signify'	" Show git diff via vim sign column
-Plug 'Valloric/MatchTagAlways'	" Highlight balise (HTML) in which your cursor is
+"Plug 'Valloric/MatchTagAlways'	" Highlight balise (HTML) in which your cursor is
 Plug 'tpope/vim-surround'	" Use cs"' to replace things around a line
 Plug 'scrooloose/nerdcommenter' " <Leader> ci to comment/uncomment or L-cm L-cs L-cc L-cu
 Plug 'itchyny/lightline.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'rhysd/conflict-marker.vim'
-Plug 'scrooloose/syntastic'
+"Plug 'scrooloose/syntastic'
 Plug 'Shougo/neocomplete.vim'
 Plug 'editorconfig/editorconfig-vim'
 " Plug 'junegunn/vim-easy-align'
@@ -69,7 +75,19 @@ endif
 " ---------- epitech-vim configuration ----------
 " let g:header_update = 0 " Disable automatic header update when saving a file in vim-epitech plugin
 
+" ---------- ale ----------
+let g:ale_sign_error = '●' " Less aggressive than the default '>>'
+let g:ale_sign_warning = '.'
+let g:ale_lint_on_enter = 0 " Less distracting when opening a new file
+
+autocmd BufWritePost *.js AsyncRun -post=checktime ./node_modules/.bin/eslint --fix %
+
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\}
+
 " ---------- syntastic configuration ----------
+"let g:syntastic_go_checkers = ['gofmt', 'goimports']
 let g:syntastic_c_checkers=['make DEBUG=yes', 'gcc'] " set syntastic default checker
 "let g:syntastic_asm_compiler=['nasm']
 
@@ -111,8 +129,8 @@ set nocompatible                " vim defaults, not vi!
 set hidden                      " allow editing multiple unsaved buffers
 set more                        " the 'more' prompt
 set autoread                    " watch for file changes by other programs
-set vb t_vb=
-set visualbell t_vb=
+"set vb t_vb=
+"set visualbell t_vb=
 
 ":set patchmode=~                " only produce *~ if not there
 set noautowrite                 " don't automatically write on :next, etc
@@ -187,14 +205,11 @@ set diffopt=filler,iwhite       " ignore all whitespace and sync
 :map <LocalLeader>fc /\v^[<=>]{7}( .*\|$)<CR>
 
 " neovim requirements
-let g:python_host_prog = '/usr/bin/python'
+"let g:python_host_prog = '/usr/bin/python'
 
 " ---------- ASM-specific ----------
 au BufRead,BufNewFile *.asm set filetype=nasm " Overide filetype nasm for .asm files
 let g:syntastic_nasm_nasm_post_args = "-f elf64"
-
-" ---------- Javascript Specific ----------  
-autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2 et
 
 " ---------- Go Specific ----------  
 autocmd FileType go setlocal shiftwidth=8 tabstop=8 softtabstop=8 et

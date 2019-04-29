@@ -20,6 +20,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'w0rp/ale'
 Plug 'skywind3000/asyncrun.vim'
+Plug 'posva/vim-vue'
 "Plug 'StanAngeloff/php.vim'
 " Plug 'LeBarbu/vim-epitech'	          " Headers && indentation stuff
 " Plug 'klen/python-mode'

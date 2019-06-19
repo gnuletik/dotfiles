@@ -1,4 +1,4 @@
-" ----------- Reminder --------- 
+" ----------- Reminder ---------
 "  Reminder :
 "  :tabe && gt to switch tab
 "  :vnew
@@ -6,10 +6,10 @@
 "  CTRL + P
 "  ci) ==> Change inside parentheses
 
-" ----------- Plugins --------- 
+" ----------- Plugins ---------
 call plug#begin('~/.vim/plugged')
 
-" ---------- Languages ---------- 
+" ---------- Languages ----------
 Plug 'wting/rust.vim'
 Plug 'fatih/vim-go'
 Plug 'alvan/vim-closetag'		  " Automatically close HTML/XML tags
@@ -21,18 +21,19 @@ Plug 'mxw/vim-jsx'
 Plug 'w0rp/ale'
 Plug 'skywind3000/asyncrun.vim'
 Plug 'posva/vim-vue'
+Plug 'burner/vim-svelte'
 "Plug 'StanAngeloff/php.vim'
 " Plug 'LeBarbu/vim-epitech'	          " Headers && indentation stuff
 " Plug 'klen/python-mode'
 
-" ----------- Themes --------- 
+" ----------- Themes ---------
 Plug 'ayu-theme/ayu-vim'
 " Plug 'altercation/vim-colors-solarized'
 " Plug 'tomasr/molokai'
 " Plug 'mhartington/oceanic-next'
 " Plug 'junegunn/seoul256.vim'
 
-" ----------- Others --------- 
+" ----------- Others ---------
 Plug 'mhinz/vim-signify'	" Show git diff via vim sign column
 "Plug 'Valloric/MatchTagAlways'	" Highlight balise (HTML) in which your cursor is
 Plug 'tpope/vim-surround'	" Use cs"' to replace things around a line
@@ -81,11 +82,40 @@ let g:ale_sign_error = '●' " Less aggressive than the default '>>'
 let g:ale_sign_warning = '.'
 let g:ale_lint_on_enter = 0 " Less distracting when opening a new file
 
-autocmd BufWritePost *.js AsyncRun -post=checktime ./node_modules/.bin/eslint --fix %
+" run black on save
+" autocmd BufWritePre *.py execute ':Black'
+" autocmd BufWritePre *.py execute ':Isort'
 
+" run eslint on save
+"autocmd BufWritePost *.{js,vue,svelte} AsyncRun -post=checktime ./node_modules/.bin/eslint --fix %
+
+" Enables Python linters to use
+" the project's pipenv
+" !! In order to activate pipenv, a `Pipfile.lock` must exist.
+" !! See https://github.com/w0rp/ale/blob/master/autoload/ale/python.vim#L155
+let g:ale_python_auto_pipenv = 1
+
+" The following requires that you install some tools on your system / user
+" npm install -g eslint
+" pip3 install flake8 pylint
 let g:ale_linters = {
 \   'javascript': ['eslint'],
+\   'vue': ['eslint'],
+\   'svelte': ['eslint'],
+\   'python': ['flake8', 'pylint'],
 \}
+
+" pip3 install black
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['eslint'],
+\   'vue': ['eslint'],
+\   'svelte': ['eslint'],
+\   'python': ['black', 'isort'],
+\}
+
+" Set this variable to 1 to fix files when you save them.
+let g:ale_fix_on_save = 0
 
 " ---------- syntastic configuration ----------
 "let g:syntastic_go_checkers = ['gofmt', 'goimports']
@@ -93,12 +123,17 @@ let g:syntastic_c_checkers=['make DEBUG=yes', 'gcc'] " set syntastic default che
 "let g:syntastic_asm_compiler=['nasm']
 
 " ---------- ctrp configuration ----------
-let g:ctrlp_custom_ignore = '\v\.o$' " Do not list .o files
+"  Ignore *.o files and common build / dependencies directories
+let g:ctrlp_custom_ignore = {
+            \ 'dir': '\v[\/](\.git|node_modules|dist|build|fixers|vendor)$',
+            \ 'file': '\v\.o$',
+            \ }
 
 " ---------- vim-go configuration ----------
+let g:go_metalinter_command = "golangci-lint"
 let g:go_metalinter_autosave = 1 " call metalinter on save
-
 let g:go_metalinter_autosave_enabled = ['vet', 'golint' ]
+
 " errcheck and unused are too slow to be called on save
 "let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck', 'unused' ]
 "let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck', 'unused', 'goimports', 'gotype', 'deadcode', 'varcheck', 'structcheck', 'ineffassign', 'unconvert', 'goconst', 'gosimple', 'staticcheck', 'misspell']
@@ -208,9 +243,16 @@ set diffopt=filler,iwhite       " ignore all whitespace and sync
 " neovim requirements
 "let g:python_host_prog = '/usr/bin/python'
 
+" When using pyenv, you want to force vim to use system's python
+" https://sk1u.com/blog/2018/04/16/pyenv-neovim
+" pyenv which python                                                                                                                                                                                                             ✘ 130
+let g:python_host_prog = '/usr/bin/python'
+" pyenv which python3
+let g:python3_host_prog = '/usr/local/bin/python3'
+
 " ---------- ASM-specific ----------
 au BufRead,BufNewFile *.asm set filetype=nasm " Overide filetype nasm for .asm files
 let g:syntastic_nasm_nasm_post_args = "-f elf64"
 
-" ---------- Go Specific ----------  
+" ---------- Go Specific ----------
 autocmd FileType go setlocal shiftwidth=8 tabstop=8 softtabstop=8 et

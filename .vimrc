@@ -22,6 +22,8 @@ Plug 'w0rp/ale'
 Plug 'skywind3000/asyncrun.vim'
 Plug 'posva/vim-vue'
 Plug 'burner/vim-svelte'
+Plug 'jparise/vim-graphql'
+Plug 'amadeus/vim-mjml'
 "Plug 'StanAngeloff/php.vim'
 " Plug 'LeBarbu/vim-epitech'	          " Headers && indentation stuff
 " Plug 'klen/python-mode'
@@ -132,14 +134,21 @@ let g:ctrlp_custom_ignore = {
 " ---------- vim-go configuration ----------
 let g:go_metalinter_command = "golangci-lint"
 let g:go_metalinter_autosave = 1 " call metalinter on save
-let g:go_metalinter_autosave_enabled = ['vet', 'golint' ]
 
-" errcheck and unused are too slow to be called on save
-"let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck', 'unused' ]
-"let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck', 'unused', 'goimports', 'gotype', 'deadcode', 'varcheck', 'structcheck', 'ineffassign', 'unconvert', 'goconst', 'gosimple', 'staticcheck', 'misspell']
+" see list here
+" https://github.com/golangci/golangci-lint#quick-start
+let g:go_metalinter_autosave_enabled = [
+				\ 'deadcode', 'errcheck', 'gosimple', 'govet',
+				\ 'ineffassign', 'staticcheck', 'structcheck',
+				\ 'typecheck', 'unused', 'varcheck'
+				\ ]
+
+" Do not move the cursor the error
+let g:go_jump_to_error = 0
 
 " goimports is basically gofmt + auto-replace the imports
 let g:go_fmt_command = "goimports"
+let g:go_fmt_autosave = 1
 
 " ---------- nerdtree configuration ----------
 

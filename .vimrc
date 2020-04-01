@@ -24,6 +24,7 @@ Plug 'posva/vim-vue'
 Plug 'burner/vim-svelte'
 Plug 'jparise/vim-graphql'
 Plug 'amadeus/vim-mjml'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "Plug 'StanAngeloff/php.vim'
 " Plug 'LeBarbu/vim-epitech'	          " Headers && indentation stuff
 " Plug 'klen/python-mode'
@@ -104,7 +105,7 @@ let g:ale_linters = {
 \   'javascript': ['eslint'],
 \   'vue': ['eslint'],
 \   'svelte': ['eslint'],
-\   'python': ['flake8', 'pylint'],
+\   'python': ['flake8', 'pylint', 'mypy'],
 \}
 
 " pip3 install black
@@ -115,6 +116,8 @@ let g:ale_fixers = {
 \   'svelte': ['eslint'],
 \   'python': ['black', 'isort'],
 \}
+
+let g:ale_linter_aliases = {'vue': 'typescript'}
 
 " Set this variable to 1 to fix files when you save them.
 let g:ale_fix_on_save = 0

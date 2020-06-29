@@ -16,6 +16,7 @@ Plug 'alvan/vim-closetag'		  " Automatically close HTML/XML tags
 Plug 'kchmck/vim-coffee-script'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'w0rp/ale'
@@ -112,6 +113,8 @@ let g:ale_linters = {
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': ['eslint'],
+\   'typescript': ['eslint'],
+\   'typescript.tsx': ['eslint'],
 \   'vue': ['eslint'],
 \   'svelte': ['eslint'],
 \   'python': ['black', 'isort'],
@@ -135,16 +138,16 @@ let g:ctrlp_custom_ignore = {
             \ }
 
 " ---------- vim-go configuration ----------
-let g:go_metalinter_command = "golangci-lint"
-let g:go_metalinter_autosave = 1 " call metalinter on save
+" let g:go_metalinter_command = "golangci-lint"
+" let g:go_metalinter_autosave = 1 " call metalinter on save
 
 " see list here
 " https://github.com/golangci/golangci-lint#quick-start
-let g:go_metalinter_autosave_enabled = [
-				\ 'deadcode', 'errcheck', 'gosimple', 'govet',
-				\ 'ineffassign', 'staticcheck', 'structcheck',
-				\ 'typecheck', 'unused', 'varcheck'
-				\ ]
+" let g:go_metalinter_autosave_enabled = [
+" 				\ 'deadcode', 'errcheck', 'gosimple', 'govet',
+" 				\ 'ineffassign', 'staticcheck', 'structcheck',
+" 				\ 'typecheck', 'unused', 'varcheck'
+" 				\ ]
 
 " Do not move the cursor the error
 let g:go_jump_to_error = 0
@@ -152,6 +155,12 @@ let g:go_jump_to_error = 0
 " goimports is basically gofmt + auto-replace the imports
 let g:go_fmt_command = "goimports"
 let g:go_fmt_autosave = 1
+
+" Hide quickfix/location list because it takes too much space
+" (especially with split windows)
+"
+" https://github.com/fatih/vim-go/issues/1682
+let g:go_fmt_fail_silently = 1
 
 " ---------- nerdtree configuration ----------
 
@@ -262,9 +271,24 @@ let g:python_host_prog = '/usr/bin/python'
 " pyenv which python3
 let g:python3_host_prog = '/usr/local/bin/python3'
 
+" Warning: The following configuration can be overriden
+" by a .editorconfig file
+
 " ---------- ASM-specific ----------
+
 au BufRead,BufNewFile *.asm set filetype=nasm " Overide filetype nasm for .asm files
 let g:syntastic_nasm_nasm_post_args = "-f elf64"
 
 " ---------- Go Specific ----------
-autocmd FileType go setlocal shiftwidth=8 tabstop=8 softtabstop=8 et
+
+" Go uses:
+" - coc.vim + coc-go: auto-completion, compile errors
+" - ale for static analysis
+" - vim-go for formatting
+
+" Some people don't like how the tabs are shown.
+" By default Vim shows 8 spaces for a single tab. However it's up to us how
+" to represent in Vim. The following will change it to show a single tab as 4 spaces:
+" https://github.com/fatih/vim-go/wiki/Tutorial
+
+autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4

@@ -108,9 +108,10 @@ let g:ale_python_auto_pipenv = 1
 " The following requires that you install some tools on your system / user
 " npm install -g eslint
 " pip3 install flake8 pylint
+" vue is empty because it's handled by coc-vetur
 let g:ale_linters = {
 \   'javascript': ['eslint'],
-\   'vue': ['eslint'],
+\   'vue': [],
 \   'svelte': ['eslint'],
 \   'python': ['flake8', 'pylint', 'mypy'],
 \}
@@ -121,7 +122,7 @@ let g:ale_fixers = {
 \   'javascript': ['eslint'],
 \   'typescript': ['eslint'],
 \   'typescript.tsx': ['eslint'],
-\   'vue': ['eslint'],
+\   'vue': [],
 \   'svelte': ['eslint'],
 \   'python': ['black', 'isort'],
 \}

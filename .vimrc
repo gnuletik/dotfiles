@@ -19,13 +19,16 @@ Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 Plug 'skywind3000/asyncrun.vim'
 Plug 'posva/vim-vue'
 Plug 'burner/vim-svelte'
 Plug 'jparise/vim-graphql'
 Plug 'amadeus/vim-mjml'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'yarn install --frozen-lockfile --production',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'svelte', 'yaml', 'html'] }
 "Plug 'StanAngeloff/php.vim'
 " Plug 'LeBarbu/vim-epitech'	          " Headers && indentation stuff
 " Plug 'klen/python-mode'
@@ -292,3 +295,5 @@ let g:syntastic_nasm_nasm_post_args = "-f elf64"
 " https://github.com/fatih/vim-go/wiki/Tutorial
 
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
+
+let g:prettier#autoformat_config_present = 1

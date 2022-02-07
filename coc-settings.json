@@ -1,8 +1,8 @@
 {
-	"vetur.experimental.templateInterpolationService": true,
-	"go.enable": true,
-	"go.goplsOptions": {
-		"completeUnimported": true,
-		"staticcheck": true
-	}
+  "vetur.experimental.templateInterpolationService": true,
+  "go.enable": true,
+  "go.goplsOptions": {
+    "completeUnimported": true,
+    "staticcheck": true
+  }
 }

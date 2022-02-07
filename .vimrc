@@ -71,6 +71,9 @@ if has('termguicolors') " Terminal with True colors enabled. See https://gist.gi
   colorscheme ayu
 endif
 
+" neovide
+set guifont=Dank\ Mono:h14
+
 if has('gui_running') " Setup for the visual environment
   set guioptions-=T
   set guioptions-=m
